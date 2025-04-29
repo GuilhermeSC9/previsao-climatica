@@ -54,4 +54,11 @@ export async function favoriteCitiesRoutes(app: FastifyInstance) {
         }
     })
     //Buscar cidades favoritas
+    app.get("/favorite-city", async(request, reply) =>{
+        const favoriteCities = await prisma.favoriteCity.findMany({})
+
+        return reply.send({
+            favoriteCities
+        })
+    })
 }
