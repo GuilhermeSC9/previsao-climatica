@@ -16,12 +16,23 @@ export async function weatherRoutes(app: FastifyInstance) {
             params: {
                 q: cityName
             }
-        })
+          });
+
+          const favoriteCity = await prisma.favoriteCity.findFirst({
+            where: {
+              name: cityName,
+            }
+          })
+
+          if(favoriteCity){
+            response.data.isFavorite = true,
+            response.data.favoriteCityId = favoriteCity.id
+          }
 
         return reply.send(response.data)
     });
 
-    
+
     //Buscar previsões para 3 dias
     app.get("/weather/nextdays/:cityName", async(request, reply) =>{
         const getNextDaysWeatherParamsSchema = z.object({
