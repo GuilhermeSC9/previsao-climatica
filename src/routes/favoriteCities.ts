@@ -19,8 +19,8 @@ export async function favoriteCitiesRoutes(app: FastifyInstance) {
 
         if (insertedCity){
             return reply.status(409).send("Essa cidade já foi adicionada")
-            
-            
+
+
         } else{
             await prisma.favoriteCity.create({
                 data: {
@@ -48,7 +48,7 @@ export async function favoriteCitiesRoutes(app: FastifyInstance) {
 
         if(!insertedCity){
             return reply.status(404).send('Cidade não encontrada')
-            
+
         }
 
         await prisma.favoriteCity.delete({
@@ -62,8 +62,8 @@ export async function favoriteCitiesRoutes(app: FastifyInstance) {
     app.get("/favoritecity", async(request, reply) =>{
         const favoriteCities = await prisma.favoriteCity.findMany({})
 
-        return reply.send({
+        return reply.send(
             favoriteCities
-        })
+        )
     })
 }
